@@ -1,0 +1,3 @@
+rootProject.name = 'tricorder'
+
+include ':app'
