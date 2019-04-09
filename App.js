@@ -6,8 +6,10 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import { VisionCamera } from "react-native-vision";
+import { whileStatement } from '@babel/types';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -20,11 +22,23 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <VisionCamera style={{ flex: 1 }} classifier="MobileNet" isCameraFront={false}>
+        {({ label, confidence }) => (
+          <Text
+            style={{
+              width: "75%",
+              fontSize: 50,
+              position: "absolute",
+              right: 50,
+              bottom: 100, 
+              color: "white", 
+            }}
+          >
+            {label + " :" + (confidence * 100).toFixed(0) + "%"}
+          </Text>
+        )}
+      </VisionCamera>
+     
     );
   }
 }

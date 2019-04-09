@@ -37,9 +37,12 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* tricorderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* tricorderTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		494710B2F1AD4691973F0CB0 /* VisualSentimentCNN.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = F5CC3EABB77F4AB39182BB17 /* VisualSentimentCNN.mlmodelc */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8A6FB7716B014F79B624D481 /* libRHDVision.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC06D17EFF144C1382BD28FF /* libRHDVision.a */; };
+		905C5E424DB14364AE05F871 /* CNNEmotions.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = A57AE454DE784A5690A9E080 /* CNNEmotions.mlmodelc */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		ADC977E5F8DA421986BA8B99 /* GenderNet.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = A5E7149804EE4F7DB008043E /* GenderNet.mlmodelc */; };
 		C76570B1225258CE00C93827 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C250472D14FF085CCB593 /* RNPlaceholder.swift */; };
 		C76570B2225258CE00C93827 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C250472D14FF085CCB593 /* RNPlaceholder.swift */; };
 		C76570B3225258CE00C93827 /* RNPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643C250472D14FF085CCB593 /* RNPlaceholder.swift */; };
@@ -360,10 +363,13 @@
 		6BE6299794534112BD67844A /* MobileNet.mlmodelc */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = folder; name = MobileNet.mlmodelc; path = ../MobileNet.mlmodelc; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		A57AE454DE784A5690A9E080 /* CNNEmotions.mlmodelc */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = folder; name = CNNEmotions.mlmodelc; path = ../CNNEmotions.mlmodelc; sourceTree = "<group>"; };
+		A5E7149804EE4F7DB008043E /* GenderNet.mlmodelc */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = folder; name = GenderNet.mlmodelc; path = ../GenderNet.mlmodelc; sourceTree = "<group>"; };
 		AC06D17EFF144C1382BD28FF /* libRHDVision.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRHDVision.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F5CC3EABB77F4AB39182BB17 /* VisualSentimentCNN.mlmodelc */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = folder; name = VisualSentimentCNN.mlmodelc; path = ../VisualSentimentCNN.mlmodelc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -637,6 +643,9 @@
 				643C250472D14FF085CCB593 /* RNPlaceholder.swift */,
 				AC06D17EFF144C1382BD28FF /* libRHDVision.a */,
 				6BE6299794534112BD67844A /* MobileNet.mlmodelc */,
+				F5CC3EABB77F4AB39182BB17 /* VisualSentimentCNN.mlmodelc */,
+				A57AE454DE784A5690A9E080 /* CNNEmotions.mlmodelc */,
+				A5E7149804EE4F7DB008043E /* GenderNet.mlmodelc */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1112,6 +1121,9 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				DBAF8476789A478AAE2A3995 /* MobileNet.mlmodelc in Resources */,
+				494710B2F1AD4691973F0CB0 /* VisualSentimentCNN.mlmodelc in Resources */,
+				905C5E424DB14364AE05F871 /* CNNEmotions.mlmodelc in Resources */,
+				ADC977E5F8DA421986BA8B99 /* GenderNet.mlmodelc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
