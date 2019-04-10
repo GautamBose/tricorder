@@ -7,14 +7,15 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Button } from 'react-native';
 // import { VisionCamera } from "react-native-vision";
 import { RNVCameraView, RNVisionProvider, RNVDefaultRegion, RNVRegion } from "react-native-vision"
 import { dog_list } from './util';
 
 
-import { whileStatement, objectExpression } from '@babel/types';
+import { whileStatement, objectExpression, assignmentExpression } from '@babel/types';
 import { getImageDimensions } from 'react-native-vision/module';
+import SlidingUpPanel from 'rn-sliding-up-panel';
 
 const dimensions = Dimensions.get('window');
 
@@ -33,6 +34,7 @@ export default class App extends Component<Props> {
     this.modelURL = 'MobileNet.mlmodelc';
     this.isDisabled = true;
     this.button = null;
+    this.images= []; 
   }
 
   state = {
@@ -46,25 +48,31 @@ export default class App extends Component<Props> {
 
   frameCapture = (urlToImage) => {
     this.setState({ shouldCaptureFrame: null });
+    this.images.push(urlToImage); // possibly add require to this. 
   }
 
   render() {
 
     return (
+
       <RNVisionProvider isCameraFront={false} isStarted>
         <RNVRegion region="" classifiers={[{ url: 'MobileNet.mlmodelc', max: 5 }]}
           onFrameCaptured={this.state.shouldCaptureFrame}>
 
           {({ label, confidence }) => {
-            {/* console.log(confidence);  */}
+            {/* console.log(confidence);  */ }
             if (dog_list.includes(label) && confidence > 0.2) {
               this.isDisabled = false;
-              this.button = <TouchableOpacity onPress={this.onButtonPress} style={styles.canTakeBlock} disabled={this.isDisabled}></TouchableOpacity>
+              this.button = <TouchableOpacity onPress={this.onButtonPress} style={styles.canTakeBlock} disabled={this.isDisabled}>
+                <Image style={styles.dogButton} source={require('./assets/dogButton.png')} />
+              </TouchableOpacity>
 
             }
             else {
               this.isDisabled = true;
-              this.button = <TouchableOpacity onPress={this.onButtonPress} style={styles.foodBlock} disabled={this.isDisabled}></TouchableOpacity>
+              this.button = <TouchableOpacity onPress={this.onButtonPress} style={styles.foodBlock} disabled={this.isDisabled}>
+                <Image style={styles.noCamera} source={require('./assets/noCamera.png')}/>
+              </TouchableOpacity>
             }
 
             return (
@@ -74,17 +82,31 @@ export default class App extends Component<Props> {
                   <RNVCameraView gravity="fill" style={styles.camera} />
                 </View>
                 <View>
-                  
-                </View>
-                <View style={styles.controlsContainers}>
-                  {this.button}
 
                 </View>
+                <View style={styles.controlsContainers}>
+                  
+                  <TouchableOpacity>
+                    <Image style={styles.galleryButton} source={require('./assets/gallery.png')}/>
+                  </TouchableOpacity>
+                  {this.button}
+                </View>
+
+                <SlidingUpPanel ref={c => this._panel = c}>
+                  <View style={styles.container}>
+                    <Text>Here is the content inside panel</Text>
+                    <Button title='Hide' onPress={() => this._panel.hide()} />
+                  </View>
+                </SlidingUpPanel>
               </View>
             )
           }}
         </RNVRegion>
       </RNVisionProvider>
+
+
+
+
     );
   }
 }
@@ -99,9 +121,21 @@ const styles = StyleSheet.create({
     textAlign: "center",
     margin: 10,
   },
-  foodBlock: {
-    padding: 20,
+  galleryButton: {
+    width: 40,
+    height: 32,
+    marginLeft: 30,
+    marginRight: 72,
     
+
+  }, 
+  noCamera: {
+    width: 80, 
+    height: 80,
+  },
+  foodBlock: {
+    padding:5,
+    marginBottom: 4,
     borderRadius: 70,
     fontSize: 20,
 
@@ -110,14 +144,18 @@ const styles = StyleSheet.create({
     color: "#ccc",
   },
   canTakeBlock: {
-    padding: 20,
-    
+    padding: 5,
+
     borderRadius: 70,
     fontSize: 20,
 
     textAlign: "center",
-    backgroundColor: "green",
+    backgroundColor: "#67ea5d",
     color: "#ccc",
+  },
+  dogButton: {
+    width: 80,
+    height: 80,
   },
   camera: {
     flex: 1,
@@ -127,7 +165,7 @@ const styles = StyleSheet.create({
     // overflow: "hidden",
   },
   cameraContainer: {
-    height: "70%",
+    height: "72%",
   },
   topBar: {
     width: dimensions.width,
@@ -137,9 +175,10 @@ const styles = StyleSheet.create({
   controlsContainers: {
     backgroundColor: 'black',
     height: 150,
-    "display": "flex",
-    "justifyContent": "center",
-    "alignItems": "center",
+    display: "flex",
+    flexDirection: 'row',
+    
+    alignItems: "center",
 
   }
 })
