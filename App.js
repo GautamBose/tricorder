@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
+import { Platform, StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 // import { VisionCamera } from "react-native-vision";
 import { RNVCameraView, RNVisionProvider, RNVDefaultRegion, RNVRegion } from "react-native-vision"
 
@@ -39,21 +39,24 @@ export default class App extends Component<Props> {
 
 
   onButtonPress = () => {
-
+    this.setState({shouldCaptureFrame: this.frameCapture}); 
     console.log("button PRess");
   };
 
-  onFrameCapture = (urlToImage) => {
-    
+  frameCapture = (urlToImage) => {
+    console.log(urlToImage);
+    this.setState({shouldCaptureFrame: null}); 
+
   }
 
   render() {
 
     return (
       <RNVisionProvider isCameraFront={false} isStarted>
-        <RNVRegion region="" classifiers={[{url: 'MobileNet.mlmodelc', max:5}]}>
+        <RNVRegion region="" classifiers={[{url: 'MobileNet.mlmodelc', max:5}]}
+        onFrameCaptured={this.state.shouldCaptureFrame}>
           {({ label, confidence }) => {
-            console.log(label);
+            {/* console.log(label); */}
             return (
               <SafeAreaView style={styles.container}>
                 <Text style={styles.welcome}>Food 101</Text>
@@ -61,11 +64,9 @@ export default class App extends Component<Props> {
                 <View style={styles.cameraContainer}>
                   <RNVCameraView gravity="fill" style={styles.camera} />
                 </View>
-                {/* <Text style={styles.foodBlock}>
-                  {classifications && classifications[this.state.classifier]
-                    ? classifications[this.state.classifier][0].label
-                    : "Loading Model"}
-                </Text> */}
+                <TouchableOpacity onPress={this.onButtonPress}style={styles.foodBlock}>
+                  <Text>Touch Here</Text>
+                </TouchableOpacity>
               </SafeAreaView>
             )
           }}
