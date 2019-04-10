@@ -7,13 +7,16 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from 'react-native';
 // import { VisionCamera } from "react-native-vision";
 import { RNVCameraView, RNVisionProvider, RNVDefaultRegion, RNVRegion } from "react-native-vision"
 import { dog_list } from './util';
 
-import { whileStatement, objectExpression } from '@babel/types';
 
+import { whileStatement, objectExpression } from '@babel/types';
+import { getImageDimensions } from 'react-native-vision/module';
+
+const dimensions = Dimensions.get('window');
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -53,8 +56,8 @@ export default class App extends Component<Props> {
           onFrameCaptured={this.state.shouldCaptureFrame}>
 
           {({ label, confidence }) => {
-
-            if (dog_list.includes(label)) {
+            {/* console.log(confidence);  */}
+            if (dog_list.includes(label) && confidence > 0.2) {
               this.isDisabled = false;
               this.button = <TouchableOpacity onPress={this.onButtonPress} style={styles.canTakeBlock} disabled={this.isDisabled}></TouchableOpacity>
 
@@ -66,11 +69,13 @@ export default class App extends Component<Props> {
 
             return (
               <View style={styles.container}>
-
+                <Image source={require('./assets/IMG_6006.png')} style={styles.topBar}></Image>
                 <View style={styles.cameraContainer}>
                   <RNVCameraView gravity="fill" style={styles.camera} />
                 </View>
-
+                <View>
+                  
+                </View>
                 <View style={styles.controlsContainers}>
                   {this.button}
 
@@ -87,7 +92,7 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    backgroundColor: "#F5FCFF",
+    backgroundColor: "black",
   },
   welcome: {
     fontSize: 20,
@@ -96,7 +101,7 @@ const styles = StyleSheet.create({
   },
   foodBlock: {
     padding: 20,
-    marginBottom: 145,
+    
     borderRadius: 70,
     fontSize: 20,
 
@@ -106,7 +111,7 @@ const styles = StyleSheet.create({
   },
   canTakeBlock: {
     padding: 20,
-    marginBottom: 145,
+    
     borderRadius: 70,
     fontSize: 20,
 
@@ -122,11 +127,16 @@ const styles = StyleSheet.create({
     // overflow: "hidden",
   },
   cameraContainer: {
-    height: "83%",
+    height: "70%",
+  },
+  topBar: {
+    width: dimensions.width,
+    height: 45,
+    marginTop: 35
   },
   controlsContainers: {
-    backgroundColor: 'red',
-    height: 300,
+    backgroundColor: 'black',
+    height: 150,
     "display": "flex",
     "justifyContent": "center",
     "alignItems": "center",
