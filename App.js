@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Button } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Button, SafeAreaView, ScrollView } from 'react-native';
 // import { VisionCamera } from "react-native-vision";
 import { RNVCameraView, RNVisionProvider, RNVDefaultRegion, RNVRegion } from "react-native-vision"
 import { dog_list } from './util';
@@ -34,7 +34,7 @@ export default class App extends Component<Props> {
     this.modelURL = 'MobileNet.mlmodelc';
     this.isDisabled = true;
     this.button = null;
-    this.images= []; 
+    this.images = [];
   }
 
   state = {
@@ -48,7 +48,10 @@ export default class App extends Component<Props> {
 
   frameCapture = (urlToImage) => {
     this.setState({ shouldCaptureFrame: null });
+    console.log("Hi"); 
     this.images.push(urlToImage); // possibly add require to this. 
+    console.log(this.images); 
+    
   }
 
   render() {
@@ -71,7 +74,7 @@ export default class App extends Component<Props> {
             else {
               this.isDisabled = true;
               this.button = <TouchableOpacity onPress={this.onButtonPress} style={styles.foodBlock} disabled={this.isDisabled}>
-                <Image style={styles.noCamera} source={require('./assets/noCamera.png')}/>
+                <Image style={styles.noCamera} source={require('./assets/noCamera.png')} />
               </TouchableOpacity>
             }
 
@@ -85,27 +88,37 @@ export default class App extends Component<Props> {
 
                 </View>
                 <View style={styles.controlsContainers}>
-                  
-                  <TouchableOpacity>
-                    <Image style={styles.galleryButton} source={require('./assets/gallery.png')}/>
+
+                  <TouchableOpacity onPress={() => this._panel.show()}>
+                    <Image style={styles.galleryButton} source={require('./assets/gallery.png')} />
                   </TouchableOpacity>
                   {this.button}
                 </View>
 
                 <SlidingUpPanel ref={c => this._panel = c}>
-                  <View style={styles.container}>
-                    <Text>Here is the content inside panel</Text>
-                    <Button title='Hide' onPress={() => this._panel.hide()} />
-                  </View>
+                  {dragHandler => (
+                    <SafeAreaView>
+                      <View style={styles.container}>
+                        <View style={styles.dragHandler} {...dragHandler}>
+                          <Text style={{ color: '#daa250', fontSize: 30, marginBottom: 10 }}>Gallery</Text>
+                        </View>
+                        <ScrollView style={{ height: '100%' }}>
+                         
+                          {this.images.map( (fileURL) => (
+                            <View style={styles.galleryImageContainer} key={fileURL.fileURL}>
+                              <Image style={{width: 300, height: 300}}source={{uri: fileURL.fileURL}}/>
+                            </View>
+                          ))}
+                        </ScrollView>
+                      </View>
+                    </SafeAreaView>
+                  )}
                 </SlidingUpPanel>
               </View>
             )
           }}
         </RNVRegion>
       </RNVisionProvider>
-
-
-
 
     );
   }
@@ -126,15 +139,15 @@ const styles = StyleSheet.create({
     height: 32,
     marginLeft: 30,
     marginRight: 72,
-    
 
-  }, 
+
+  },
   noCamera: {
-    width: 80, 
-    height: 80,
+    width: 70,
+    height: 70,
   },
   foodBlock: {
-    padding:5,
+    padding: 5,
     marginBottom: 4,
     borderRadius: 70,
     fontSize: 20,
@@ -154,8 +167,8 @@ const styles = StyleSheet.create({
     color: "#ccc",
   },
   dogButton: {
-    width: 80,
-    height: 80,
+    width: 70,
+    height: 70,
   },
   camera: {
     flex: 1,
@@ -172,12 +185,22 @@ const styles = StyleSheet.create({
     height: 45,
     marginTop: 35
   },
+  galleryImageContainer: {
+    // width: 75,
+    // height: 85,
+    display: 'flex',
+    marginRight: 5
+  },
+  galleryImage: {
+    width: 75,
+    height: 75
+  },
   controlsContainers: {
     backgroundColor: 'black',
     height: 150,
     display: "flex",
     flexDirection: 'row',
-    
+
     alignItems: "center",
 
   }
