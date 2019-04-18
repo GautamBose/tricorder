@@ -50,22 +50,22 @@ export default class App extends Component<Props> {
   render() {
 
     return (
+      // Basic vision provide that starts the camera feed. 
       <RNVisionProvider isCameraFront={false} isStarted>
+      {/* Here is where you can pass an array of classifiers as the downloadable mlmodelc files*/}
+      {/* In this example I've loaded a simple Mobilenet trained on imagenet */}
         <RNVRegion region="" classifiers={[{url: 'MobileNet.mlmodelc', max:5}]}>
+        {/* this arrow functions gets passed these label, confidence values for each classifier in the array */}
           {({ label, confidence }) => {
             console.log(label);
             return (
               <SafeAreaView style={styles.container}>
-                <Text style={styles.welcome}>Food 101</Text>
-                <Text style={styles.explainer}>Point the camera at some food!</Text>
-                <View style={styles.cameraContainer}>
-                  <RNVCameraView gravity="fill" style={styles.camera} />
-                </View>
-                {/* <Text style={styles.foodBlock}>
+                {/* Display the classifications in a simple text on screen */}
+                <Text style={styles.foodBlock}>
                   {classifications && classifications[this.state.classifier]
                     ? classifications[this.state.classifier][0].label
                     : "Loading Model"}
-                </Text> */}
+                </Text>
               </SafeAreaView>
             )
           }}
