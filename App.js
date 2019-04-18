@@ -59,9 +59,10 @@ export default class App extends Component<Props> {
     return (
 
       <RNVisionProvider isCameraFront={false} isStarted>
+        {/* Here we provide a region of the frame and an array of classifiers to run on that region */}
         <RNVRegion region="" classifiers={[{ url: 'MobileNet.mlmodelc', max: 5 }]}
           onFrameCaptured={this.state.shouldCaptureFrame}>
-
+          {/* These instance variables get updated with the results of that classifier */}
           {({ label, confidence }) => {
             {/* console.log(confidence);  */ }
             if (dog_list.includes(label) && confidence > 0.2) {
