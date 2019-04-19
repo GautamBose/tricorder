@@ -9,7 +9,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Button, SafeAreaView, ScrollView } from 'react-native';
 // import { VisionCamera } from "react-native-vision";
-import { RNVCameraView, RNVisionProvider, RNVDefaultRegion, RNVRegion } from "react-native-vision"
+import { RNVCameraView, RNVisionProvider, RNVDefaultRegion, RNVRegion, FacesProvider, FacesConsumer, Faces } from "react-native-vision"
 import { dog_list } from './util';
 
 
@@ -55,73 +55,25 @@ export default class App extends Component<Props> {
   }
 
   render() {
-
+    console.log("HI");
     return (
+      <FacesProvider 
+        isStarted={true}
+        isCameraFront={true}
+        classifier={null}>
 
-      <RNVisionProvider isCameraFront={false} isStarted>
-        {/* Here we provide a region of the frame and an array of classifiers to run on that region */}
-        <RNVRegion region="" classifiers={[{ url: 'MobileNet.mlmodelc', max: 5 }]}
-          onFrameCaptured={this.state.shouldCaptureFrame}>
-          {/* These instance variables get updated with the results of that classifier */}
-          {({ label, confidence }) => {
-            {/* console.log(confidence);  */ }
-            if (dog_list.includes(label) && confidence > 0.2) {
-              this.isDisabled = false;
-              this.button = <TouchableOpacity onPress={this.onButtonPress} style={styles.canTakeBlock} disabled={this.isDisabled}>
-                <Image style={styles.dogButton} source={require('./assets/dogButton.png')} />
-              </TouchableOpacity>
-
-            }
-            else {
-              this.isDisabled = true;
-              this.button = <TouchableOpacity onPress={this.onButtonPress} style={styles.foodBlock} disabled={this.isDisabled}>
-                <Image style={styles.noCamera} source={require('./assets/noCamera.png')} />
-              </TouchableOpacity>
-            }
-
-            return (
-              <View style={styles.container}>
-                <Image source={require('./assets/IMG_6006.png')} style={styles.topBar}></Image>
-                <View style={styles.cameraContainer}>
-                  <RNVCameraView gravity="fill" style={styles.camera} />
-                </View>
-                <View>
-
-                </View>
-                <View style={styles.controlsContainers}>
-
-                  <TouchableOpacity onPress={() => this._panel.show()}>
-                    <Image style={styles.galleryButton} source={require('./assets/gallery.png')} />
-                  </TouchableOpacity>
-                  {this.button}
-                </View>
-
-                <SlidingUpPanel ref={c => this._panel = c}>
-                  {dragHandler => (
-                    <SafeAreaView>
-                      <View style={styles.container}>
-                        <View style={styles.dragHandler} {...dragHandler}>
-                          <Text style={{ color: '#daa250', fontSize: 30, marginBottom: 10 }}>Gallery</Text>
-                        </View>
-                        <ScrollView style={{ height: '100%' }}>
-                         
-                          {this.images.map( (fileURL) => (
-                            <View style={styles.galleryImageContainer} key={fileURL.fileURL}>
-                              <Image style={{width: 300, height: 300}}source={{uri: fileURL.fileURL}}/>
-                            </View>
-                          ))}
-                        </ScrollView>
-                      </View>
-                    </SafeAreaView>
-                  )}
-                </SlidingUpPanel>
-              </View>
-            )
-          }}
-        </RNVRegion>
-      </RNVisionProvider>
-
-    );
+        <FacesConsumer>
+          {({faces}) => 
+            <Faces {...faces}>
+              {({style}) => {
+                  console.log("Hi"); 
+                }
+              }
+            </Faces>
+          }
+        </FacesConsumer>
+      </FacesProvider>    
+    )
   }
 }
 
