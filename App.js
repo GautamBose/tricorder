@@ -10,8 +10,6 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Button, SafeAreaView, ScrollView } from 'react-native';
 // import { VisionCamera } from "react-native-vision";
 import { RNVCameraView, RNVisionProvider, RNVDefaultRegion, RNVRegion, FacesProvider, FacesConsumer, Faces } from "react-native-vision"
-import { dog_list } from './util';
-
 
 import { whileStatement, objectExpression, assignmentExpression } from '@babel/types';
 import { getImageDimensions } from 'react-native-vision/module';
@@ -55,21 +53,36 @@ export default class App extends Component<Props> {
   }
 
   render() {
-    console.log("HI");
     return (
       <FacesProvider 
         isStarted={true}
         isCameraFront={true}
-        classifier={null}>
-
+        classifier={'CNNEmotions.mlmodelc'}>
+        <View style={styles.camera}>
+          <RNVCameraView gravity="fill" style={styles.camera} />
+        </View>
         <FacesConsumer>
-          {({faces}) => 
-            <Faces {...faces}>
-              {({style}) => {
-                  console.log("Hi"); 
+          {({faces}) => {
+            return (
+              <Faces {...faces}>
+                {({region, x, y, height, width}) => {
+                    console.log(region, x, y, height, width);
+                    return (
+                      <View style={{
+                        position: "absolute",
+                        top: (y * 100) + "%",
+                        right: (x * 100) + "%",
+                        height: height * 100 + "%",
+                        width: width * 100 + "%",
+                        borderWidth: 1,
+                        borderColor: '#000000'
+                      }} />
+                    )
+                  }
                 }
-              }
-            </Faces>
+              </Faces>
+            )
+          }
           }
         </FacesConsumer>
       </FacesProvider>    
